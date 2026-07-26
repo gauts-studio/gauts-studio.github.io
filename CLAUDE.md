@@ -36,7 +36,7 @@ donc le même header fonctionne à la racine et dans `services/`.
 
 ### Ajouter une page
 1. Créer le fichier HTML (racine ou `services/`).
-2. Y mettre le `<head>` Roboto + le bloc critique inline de transition +
+2. Y mettre le `<head>` Nunito Sans + le bloc critique inline de transition +
    `<link rel="stylesheet" href="…">` + `<div class="page-transition" …>`
    + `<header data-site-header></header>`. **Copier littéralement ces
    blocs depuis une page existante** (ex. `services/logo.html`) — le bloc
@@ -106,7 +106,9 @@ désactivés).
   `--color-navy: #283977`. Le navy est le fond de l'en-tête et de
   l'overlay ; le peach est le texte du header, le fond du dropdown et
   les accents.
-- **Police** : Roboto (Google Fonts) pour tout le texte du site et la nav.
+- **Police** : Nunito Sans (Google Fonts, graisses 400/500/600/700/800)
+  pour tout le texte du site et la nav — variables `--font-display`,
+  `--font-body`, `--font-mono` dans `styles.css`.
   **Ne pas modifier `assets/logo.svg`** : c'est le logo exporté, il utilise
   ses propres polices vectorielles embarquées (LibreFranklin/Jost) — il
   reste tel quel.

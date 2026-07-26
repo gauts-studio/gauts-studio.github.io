@@ -33,7 +33,6 @@
      `group` = côté du logo centré où l'onglet est placé.
      ---------------------------------------------------------- */
   const PAGES = [
-    { href: 'index.html',                     label: 'Accueil',          short: 'accueil',    group: 'left' },
     { href: 'services/sites-web.html',        label: 'Site web',         short: 'site web',   group: 'left' },
     { href: 'services/logo.html',             label: 'Logo & identité',  short: 'logo',       group: 'left' },
     { href: 'services/charte-graphique.html', label: 'Charte graphique', short: 'charte',     group: 'left' },

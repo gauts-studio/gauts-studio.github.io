@@ -16,10 +16,10 @@
   --color-steel: #44569E;       /* texte secondaire, mélange des deux bleus pour la hiérarchie */
   --color-charcoal: #293977;    /* texte principal */
 
-  /* Typo — Roboto partout (chargée via Google Fonts dans le <head>) */
-  --font-display: "Roboto", "Helvetica Neue", Arial, sans-serif;
-  --font-text: "Roboto", "Helvetica Neue", Arial, sans-serif;
-  --font-mono: "Roboto", "Helvetica Neue", Arial, sans-serif;
+  /* Typo — Nunito Sans partout (chargée via Google Fonts dans le <head>) */
+  --font-display: "Nunito Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Nunito Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Nunito Sans", "Helvetica Neue", Arial, sans-serif;
 
   /* Rythme */
   --container-width: 1120px;
@@ -48,7 +48,7 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  font-family: var(--font-text);
+  font-family: var(--font-body);
   color: var(--color-charcoal);
   background: var(--color-white);
   line-height: 1.6;
@@ -61,6 +61,10 @@ h1, h2, h3 {
   line-height: 1.15;
   margin: 0 0 0.5em;
 }
+
+/* Le h1 (titres de hero) ressort davantage que h2/h3 pour marquer la
+   hiérarchie entre les graisses disponibles de Nunito Sans. */
+h1 { font-weight: 700; }
 
 p { margin: 0 0 1em; }
 
@@ -186,6 +190,12 @@ img { max-width: 100%; display: block; }
 .logo {
   display: flex;
   align-items: center;
+  transition: opacity var(--transition);
+}
+
+.logo:hover,
+.logo:focus-visible {
+  opacity: 0.72;
 }
 
 .logo-img {
@@ -1119,7 +1129,7 @@ main:focus { outline: none; }
 
 .contact-form input,
 .contact-form textarea {
-  font-family: var(--font-text);
+  font-family: var(--font-body);
   font-size: 1rem;
   padding: 0.7rem 0.85rem;
   border: 1.5px solid rgba(20, 22, 26, 0.15);
