@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logo &amp; identité de marque — Gauts</title>
+  <meta name="description" content="Un logo et une identité de marque cohérente, pensés pour votre activité et déclinables sur tous vos supports.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-card">
+      <div class="container header-inner">
+        <a href="../index.html" class="logo"><img src="../assets/logo.svg" alt="Gauts" class="logo-img"></a>
+        <nav class="main-nav" id="main-nav">
+          <div class="nav-links" id="nav-links">
+            <span class="nav-notch" id="nav-notch" aria-hidden="true"></span>
+            <a class="nav-link" href="../index.html">Accueil</a>
+            <a class="nav-link" href="sites-web.html">Site web</a>
+            <a class="nav-link" href="logo.html" aria-current="page">Logo &amp; identité</a>
+            <a class="nav-link" href="charte-graphique.html">Charte graphique</a>
+            <a class="nav-link" href="cartes-de-visite.html">Cartes de visite</a>
+            <a class="nav-link" href="affiches.html">Affiches</a>
+            <a class="nav-link" href="rebranding.html">Rebranding</a>
+            <a class="nav-link" href="../index.html#apropos">À propos</a>
+          </div>
+          <a href="#contact" class="nav-cta">Contact</a>
+        </nav>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="page-hero">
+      <div class="container page-hero-inner">
+        <div class="page-hero-content">
+          <a class="back-link" href="../index.html#services">&larr; Tous les services</a>
+          <p class="eyebrow eyebrow-light">Services</p>
+          <h1>Logo &amp; identité de marque</h1>
+          <p class="page-hero-subtitle">Un logo pensé pour votre activité, décliné sur tous vos supports — site web, réseaux sociaux, imprimés — avec les fichiers sources fournis.</p>
+        </div>
+        <div class="page-hero-visual">
+          <div class="hero-mockup hero-mockup-square">[MOCKUP À VENIR]</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="service-process">
+      <div class="container">
+        <div class="timeline" id="timeline">
+          <div class="timeline-track" aria-hidden="true"><span class="timeline-fill"></span></div>
+
+          <div class="timeline-step">
+            <span class="timeline-number">01</span>
+            <p class="timeline-label">Étape 1</p>
+            <h3>Brief &amp; recherche</h3>
+            <p>On échange sur votre activité, vos valeurs et vos inspirations pour définir la direction du logo.</p>
+          </div>
+
+          <div class="timeline-step">
+            <span class="timeline-number">02</span>
+            <p class="timeline-label">Étape 2</p>
+            <h3>Propositions de logo</h3>
+            <p>Vous recevez plusieurs pistes à comparer, avec une ronde d'ajustements.</p>
+          </div>
+
+          <div class="timeline-step">
+            <span class="timeline-number">03</span>
+            <p class="timeline-label">Étape 3</p>
+            <h3>Livraison des fichiers finaux</h3>
+            <p>Le logo validé vous est livré dans tous les formats utiles (vectoriel, web, impression).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-wip">
+      <div class="container">
+        <div class="page-wip-inner">
+          <p class="page-wip-title">Cette page est en cours de construction</p>
+          <p class="page-wip-text">Des exemples de logos et d'identités de marque réalisés arriveront bientôt. En attendant, n'hésitez pas à me contacter directement pour en discuter.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="container contact-inner">
+        <div class="contact-info">
+          <p class="eyebrow">Contact</p>
+          <h2>Parlons de votre projet</h2>
+          <p>Décrivez-moi votre activité en quelques mots, je reviens vers vous rapidement pour caler les détails.</p>
+          <ul class="contact-details">
+            <li><span>Nom</span> Gauthier Roche</li>
+            <li><span>Email</span> <a href="mailto:gthrroche@gmail.com">gthrroche@gmail.com</a></li>
+            <li><span>Téléphone</span> <a href="tel:+33783040618">07 83 04 06 18</a></li>
+          </ul>
+        </div>
+
+        <form class="contact-form" id="contact-form" action="https://formspree.io/f/xlgyvnkq" method="POST">
+          <label for="name">Nom</label>
+          <input type="text" id="name" name="name" required autocomplete="name">
+
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required autocomplete="email">
+
+          <label for="message">Votre projet</label>
+          <textarea id="message" name="message" rows="5" required placeholder="Votre activité, ce que vous cherchez, vos délais..."></textarea>
+
+          <button type="submit" class="btn btn-primary">Envoyer ma demande</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="../index.html" class="logo"><img src="../assets/logo.svg" alt="Gauts" class="logo-img"></a>
+      <nav class="footer-nav">
+        <a href="../index.html">Accueil</a>
+        <a href="../index.html#services">Services</a>
+        <a href="../index.html#apropos">À propos</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <p class="footer-copy">&copy; <span id="year"></span> Gauts. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
