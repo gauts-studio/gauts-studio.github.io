@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header Gauts Studio</title>
+    <style>
+        /* Importation des polices pour correspondre au design (Shrikhand pour le côté groovy, DM Sans pour le reste) */
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Shrikhand&display=swap');
+
+        :root {
+            --bg-page: #ffffff;
+            --nav-bg: #2b3a6b;
+            --text-light: #f2d2c1;
+            --text-dark: #2b3a6b;
+        }
+
+        body {
+            margin: 0;
+            padding: 50px;
+            background-color: var(--bg-page);
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .navbar {
+            position: relative;
+            background-color: var(--nav-bg);
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            height: 90px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        /* L'INDICATEUR (L'effet de "découpe" blanche) */
+        .indicator {
+            position: absolute;
+            top: 0;
+            height: 75px; /* Laisse une bordure bleue en bas comme sur l'image */
+            background-color: var(--bg-page);
+            border-radius: 0 0 30px 30px;
+            transition: left 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
+                        width 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* ASTUCE CSS : Les coins arrondis inversés pour la fluidité */
+        .indicator::before, .indicator::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 25px;
+            height: 25px;
+        }
+        
+        .indicator::before {
+            left: -24.5px; /* Décalage pour éviter les micro-lignes de pixel */
+            background-image: radial-gradient(circle at 100% 100%, transparent 24.5px, var(--bg-page) 25px);
+        }
+        
+        .indicator::after {
+            right: -24.5px;
+            background-image: radial-gradient(circle at 0% 100%, transparent 24.5px, var(--bg-page) 25px);
+        }
+
+        /* GROUPES DE MENUS */
+        .nav-group {
+            display: flex;
+            align-items: center;
+            z-index: 2; /* Pour que le texte soit au dessus de l'indicateur blanc */
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--text-light);
+            font-size: 1rem;
+            padding: 10px 25px;
+            margin: 0 5px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+            border-radius: 30px;
+        }
+
+        /* Quand le menu est sélectionné (sur fond blanc), le texte devient bleu */
+        .nav-item.active {
+            color: var(--text-dark);
+        }
+
+        /* LOGO CENTRAL */
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            color: var(--text-light);
+            transform: translateY(2px);
+            cursor: pointer;
+        }
+
+        .logo-main {
+            font-family: 'Shrikhand', cursive;
+            font-size: 2.2rem;
+            line-height: 0.8;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-sub {
+            font-size: 0.65rem;
+            letter-spacing: 0.4em;
+            font-weight: 700;
+            margin-left: 2rem; /* Reproduit le décalage sous le texte "gauts" */
+            margin-top: 2px;
+        }
+
+        /* MENU BURGER DROITE */
+        .hamburger {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            z-index: 2;
+            padding: 15px;
+            margin-left: 10px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 35px;
+            height: 3px;
+            background-color: var(--text-light);
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="indicator" id="indicator"></div>
+        
+        <div class="nav-group left-group">
+            <a class="nav-item active">a propos</a>
+            <a class="nav-item">a propos</a>
+        </div>
+
+        <div class="logo-container">
+            <div class="logo-main">gauts</div>
+            <div class="logo-sub">STUDIO</div>
+        </div>
+
+        <div class="nav-group right-group">
+            <a class="nav-item">a propos</a>
+            <a class="nav-item">a propos</a>
+            <button class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const navItems = document.querySelectorAll('.nav-item');
+            const indicator = document.getElementById('indicator');
+            const navbar = document.getElementById('navbar');
+
+            function updateIndicator(item) {
+                const itemRect = item.getBoundingClientRect();
+                const navRect = navbar.getBoundingClientRect();
+                
+                const width = itemRect.width;
+                const left = itemRect.left - navRect.left;
+
+                indicator.style.width = `${width}px`;
+                indicator.style.left = `${left}px`;
+            }
+
+            const activeItem = document.querySelector('.nav-item.active');
+            if (activeItem) {
+                // Petit délai pour s'assurer que les polices Google sont chargées avant le calcul de la largeur
+                setTimeout(() => updateIndicator(activeItem), 150);
+            }
+
+            navItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    item.classList.add('active');
+                    updateIndicator(item);
+                });
+            });
+
+            window.addEventListener('resize', () => {
+                const currentActive = document.querySelector('.nav-item.active');
+                if (currentActive) {
+                    indicator.style.transition = 'none';
+                    updateIndicator(currentActive);
+                    setTimeout(() => {
+                        indicator.style.transition = 'left 0.5s cubic-bezier(0.25, 1, 0.5, 1), width 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
+                    }, 50);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

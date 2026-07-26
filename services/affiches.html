@@ -7,35 +7,21 @@
   <meta name="description" content="Des affiches et flyers pensés pour vos annonces, événements ou promotions, assortis à votre identité visuelle.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    .page-transition{position:fixed;inset:0;background:#283977;transform:translateX(100%);transition:transform .5s cubic-bezier(.7,0,.3,1);z-index:200;pointer-events:none}
+    .page-transition.is-covering{transform:translateX(0)}
+    html.pt-active .page-transition{transform:translateX(0)}
+    html.pt-active .page-transition.is-leaving{transform:translateX(-100%)}
+    @media(prefers-reduced-motion:reduce){.page-transition{display:none}}
+  </style>
+  <script>if(sessionStorage.getItem('pt-enter')==='1')document.documentElement.classList.add('pt-active');</script>
   <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
+  <div class="page-transition" id="page-transition" aria-hidden="true"></div>
 
-  <header class="site-header">
-    <div class="header-card">
-      <div class="container header-inner">
-        <a href="../index.html" class="logo"><img src="../assets/logo.svg" alt="Gauts" class="logo-img"></a>
-        <nav class="main-nav" id="main-nav">
-          <div class="nav-links" id="nav-links">
-            <span class="nav-notch" id="nav-notch" aria-hidden="true"></span>
-            <a class="nav-link" href="../index.html">Accueil</a>
-            <a class="nav-link" href="sites-web.html">Site web</a>
-            <a class="nav-link" href="logo.html">Logo &amp; identité</a>
-            <a class="nav-link" href="charte-graphique.html">Charte graphique</a>
-            <a class="nav-link" href="cartes-de-visite.html">Cartes de visite</a>
-            <a class="nav-link" href="affiches.html" aria-current="page">Affiches</a>
-            <a class="nav-link" href="rebranding.html">Rebranding</a>
-            <a class="nav-link" href="../index.html#apropos">À propos</a>
-          </div>
-          <a href="#contact" class="nav-cta">Contact</a>
-        </nav>
-        <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </header>
+  <header data-site-header></header>
 
   <main>
 
