@@ -188,6 +188,7 @@ img { max-width: 100%; display: block; }
 /* `.logo` sert aussi dans le footer : la mise en page centrée et la
    taille agrandie ne valent que dans le header. */
 .logo {
+  position: relative;
   display: flex;
   align-items: center;
   transition: opacity var(--transition);
@@ -206,6 +207,29 @@ img { max-width: 100%; display: block; }
 
 .site-header .logo { justify-self: center; }
 .site-header .logo-img { height: 42px; }
+
+/* Variante sombre du logo (voir script.js) : le logo est peach comme
+   le remplissage de l'encoche, donc invisible sur son propre fond une
+   fois l'encoche tracée dessous (page d'accueil, survol/focus). Un
+   calque masqué en navy prend le relais dans ce cas précis, exactement
+   comme le texte des onglets qui s'inverse déjà en navy sur l'encoche. */
+.logo-img-dark {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-ink);
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition);
+}
+
+.notch-on-logo .logo-img-light { opacity: 0; }
+.notch-on-logo .logo-img-dark { opacity: 1; }
 
 /* ---------- Encoche (SVG plein cadre, sous le texte) ---------- */
 .nav-notch {
@@ -250,19 +274,21 @@ img { max-width: 100%; display: block; }
   padding: 0.55rem 0.8rem;
   text-align: center;
   color: var(--color-paper);
-  font-size: 0.76rem;
-  font-weight: 400;
-  letter-spacing: 0.04em;
+  font-size: 0.98rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
   text-transform: lowercase;
   white-space: nowrap;
   transition: color var(--transition), opacity var(--transition);
 }
 .nav-link:hover { opacity: 0.65; }
 
-/* Onglet actif : le texte passe en navy, lisible sur l'encoche peach.
+/* Onglet actif : le texte passe en navy, lisible sur l'encoche peach,
+   et prend la graisse la plus épaisse de Nunito Sans (Black) pour se
+   distinguer nettement des autres onglets (medium).
    Uniquement quand l'encoche est effectivement tracée, sinon le texte
    deviendrait navy sur navy. */
-.nav-link.is-active { font-weight: 500; }
+.nav-link.is-active { font-weight: 900; }
 .nav-link.is-active:hover { opacity: 1; }
 .has-notch .nav-link.is-active { color: var(--color-ink); }
 
@@ -379,7 +405,7 @@ img { max-width: 100%; display: block; }
   transition: color var(--transition), transform var(--transition);
 }
 .dropdown-link:hover { transform: translateX(0.4rem); color: var(--color-signal-dim); }
-.dropdown-link.is-active { font-weight: 500; color: var(--color-signal); }
+.dropdown-link.is-active { font-weight: 900; color: var(--color-signal); }
 
 .dropdown-cta {
   margin-top: 1.25rem;

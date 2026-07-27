@@ -97,7 +97,9 @@
         <nav class="container header-inner" id="main-nav" aria-label="Navigation principale">
           <ul class="nav-links nav-links-left">${left}</ul>
           <a href="${base}index.html" class="logo" aria-label="Gauts Studio — accueil">
-            <img src="${base}assets/logo.svg" alt="Gauts Studio" class="logo-img">
+            <img src="${base}assets/logo.svg" alt="Gauts Studio" class="logo-img logo-img-light">
+            <span class="logo-img logo-img-dark" aria-hidden="true"
+              style="-webkit-mask-image:url('${base}assets/logo.svg');mask-image:url('${base}assets/logo.svg');"></span>
           </a>
           <div class="header-right">
             <ul class="nav-links nav-links-right">${right}</ul>
@@ -196,7 +198,17 @@
     ].join(' ');
   }
 
-  const activeBarLink = () => (card ? card.querySelector('.nav-link.is-active') : null);
+  // Le logo remplace l'onglet « Accueil » : il participe à l'encoche au
+  // même titre que les autres liens, sur la page d'accueil (état actif)
+  // et au survol/focus (aperçu temporaire — voir plus bas).
+  const logoLink = card ? card.querySelector('.logo') : null;
+  let hoverTarget = null;
+
+  const activeBarLink = () => {
+    if (hoverTarget) return hoverTarget;
+    if (currentFile === 'index.html' && logoLink) return logoLink;
+    return card ? card.querySelector('.nav-link.is-active') : null;
+  };
 
   const boundsOf = (link) => {
     const a = link.getBoundingClientRect();
@@ -232,11 +244,16 @@
     if (!link) {                     // page hors de la barre : pas d'encoche
       if (notchAnim) { cancelAnimationFrame(notchAnim); notchAnim = null; }
       notchPathEl.setAttribute('d', '');
-      card.classList.remove('has-notch');
+      card.classList.remove('has-notch', 'notch-on-logo');
       notchAt = null;
       return;
     }
     card.classList.add('has-notch');
+    // Le logo est peach comme le remplissage de l'encoche : sur son
+    // propre fond il deviendrait invisible. `.notch-on-logo` bascule
+    // vers sa variante sombre (voir styles.css) le temps que l'encoche
+    // soit tracée sous lui.
+    card.classList.toggle('notch-on-logo', link === logoLink);
     notchSvg.classList.add('is-ready');
     const to = boundsOf(link);
     if (animate && notchAt && !prefersReducedMotion) {
@@ -254,10 +271,11 @@
     const fromFile = sessionStorage.getItem('nav-from');
     sessionStorage.removeItem('nav-from');
     const fromLink = fromFile && fromFile !== currentFile
-      ? card.querySelector(`.nav-link[data-page="${fromFile}"]`)
+      ? (fromFile === 'index.html' ? logoLink : card.querySelector(`.nav-link[data-page="${fromFile}"]`))
       : null;
     if (fromLink && !prefersReducedMotion) {
       card.classList.add('has-notch');
+      card.classList.toggle('notch-on-logo', fromLink === logoLink);
       notchSvg.classList.add('is-ready');
       notchAt = boundsOf(fromLink);
       drawNotch(notchAt.x0, notchAt.x1);
@@ -271,6 +289,19 @@
     // peut changer après le premier tracé.
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(() => { if (!notchAnim) moveNotch({ animate: false }); });
+    }
+
+    // Aperçu au survol/focus du logo : l'encoche glisse temporairement
+    // sous le logo, puis revient à l'onglet réellement actif au départ
+    // (souris/clavier). Sans effet si on est déjà sur l'accueil, puisque
+    // l'encoche y est déjà.
+    if (logoLink) {
+      const previewLogo = () => { hoverTarget = logoLink; moveNotch(); };
+      const clearLogoPreview = () => { hoverTarget = null; moveNotch(); };
+      logoLink.addEventListener('mouseenter', previewLogo);
+      logoLink.addEventListener('mouseleave', clearLogoPreview);
+      logoLink.addEventListener('focus', previewLogo);
+      logoLink.addEventListener('blur', clearLogoPreview);
     }
   }
 
