@@ -6,15 +6,15 @@
    ============================================ */
 
 :root {
-  /* Couleurs */
-  --color-ink: #293977;         /* bleu foncé — fonds sombres (header, hero, à propos, footer) + accents forts */
+  /* Couleurs — le bleu marine d'origine a été remplacé par du rose vif */
+  --color-ink: #FF1493;         /* rose vif (ex-#293977) — fonds sombres (header, hero, à propos, footer) + accents forts */
   --color-paper: #FCDED0;       /* beige — fonds de section, cartes (identique au fond principal) */
   --color-white: #FCDED0;       /* beige — fond principal de page */
-  --color-signal: #293977;      /* bleu foncé — CTA, boutons sur fond clair */
-  --color-signal-dim: #5B77B9;  /* bleu clair — survol des boutons */
-  --color-signal-light: #ACABC5; /* teinte claire dérivée, pour rester lisible sur fond bleu foncé */
-  --color-steel: #44569E;       /* texte secondaire, mélange des deux bleus pour la hiérarchie */
-  --color-charcoal: #293977;    /* texte principal */
+  --color-signal: #FF1493;      /* rose vif (ex-#293977) — CTA, boutons sur fond clair */
+  --color-signal-dim: #FF66B3;  /* rose clair (ex-#5B77B9) — survol des boutons */
+  --color-signal-light: #FFB3D9; /* rose pâle (ex-#ACABC5) — teinte claire, lisible sur fond sombre */
+  --color-steel: #E63995;       /* rose soutenu (ex-#44569E) — texte secondaire */
+  --color-charcoal: #FF1493;    /* rose vif (ex-#293977) — texte principal */
 
   /* Typo — Nunito Sans partout (chargée via Google Fonts dans le <head>) */
   --font-display: "Nunito Sans", "Helvetica Neue", Arial, sans-serif;
@@ -187,16 +187,12 @@ img { max-width: 100%; display: block; }
 
 /* `.logo` sert aussi dans le footer : la mise en page centrée et la
    taille agrandie ne valent que dans le header. */
+/* Aucun effet de survol sur le logo : seule l'encoche (état actif) le
+   signale. Le focus clavier reste géré par l'anneau global. */
 .logo {
   position: relative;
   display: flex;
   align-items: center;
-  transition: opacity var(--transition);
-}
-
-.logo:hover,
-.logo:focus-visible {
-  opacity: 0.72;
 }
 
 .logo-img {
@@ -210,7 +206,7 @@ img { max-width: 100%; display: block; }
 
 /* Variante sombre du logo (voir script.js) : le logo est peach comme
    le remplissage de l'encoche, donc invisible sur son propre fond une
-   fois l'encoche tracée dessous (page d'accueil, survol/focus). Un
+   fois l'encoche tracée dessous (page d'accueil). Un
    calque masqué en navy prend le relais dans ce cas précis, exactement
    comme le texte des onglets qui s'inverse déjà en navy sur l'encoche. */
 .logo-img-dark {
@@ -265,9 +261,9 @@ img { max-width: 100%; display: block; }
   gap: 0.5rem;
 }
 
-/* Tous les onglets ont la MÊME largeur : l'encoche garde ainsi une
-   taille constante d'un onglet à l'autre (sinon la découpe change de
-   gabarit à chaque clic). Le texte est centré à l'intérieur. */
+/* Les onglets texte gardent une largeur mini commune (rendu aligné dans
+   la barre) ; l'encoche, elle, est mesurée en JS sur l'élément réel, donc
+   elle s'ajuste au logo comme aux liens. Le texte est centré. */
 .nav-link {
   display: inline-block;
   min-width: 6.1rem;
@@ -279,17 +275,14 @@ img { max-width: 100%; display: block; }
   letter-spacing: 0.02em;
   text-transform: lowercase;
   white-space: nowrap;
-  transition: color var(--transition), opacity var(--transition);
+  transition: color var(--transition);
 }
-.nav-link:hover { opacity: 0.65; }
 
-/* Onglet actif : le texte passe en navy, lisible sur l'encoche peach,
-   et prend la graisse la plus épaisse de Nunito Sans (Black) pour se
-   distinguer nettement des autres onglets (medium).
-   Uniquement quand l'encoche est effectivement tracée, sinon le texte
-   deviendrait navy sur navy. */
+/* Aucun effet de survol sur les onglets. Seul l'onglet actif est
+   distingué : texte navy (lisible sur l'encoche peach) et graisse la
+   plus épaisse de Nunito Sans (Black). Le passage navy n'a lieu que
+   quand l'encoche est tracée, sinon ce serait navy sur navy. */
 .nav-link.is-active { font-weight: 900; }
-.nav-link.is-active:hover { opacity: 1; }
 .has-notch .nav-link.is-active { color: var(--color-ink); }
 
 /* ---------- Hamburger (toujours visible — ouvre le menu déroulant) ---------- */
@@ -384,7 +377,7 @@ img { max-width: 100%; display: block; }
   border-radius: 50%;
   transition: background var(--transition);
 }
-.dropdown-close:hover { background: rgba(41, 57, 119, 0.08); }
+.dropdown-close:hover { background: rgba(255, 20, 147, 0.08); }
 .dropdown-close svg { width: 20px; height: 20px; }
 
 .dropdown-nav {
@@ -400,7 +393,7 @@ img { max-width: 100%; display: block; }
   letter-spacing: 0.02em;
   text-transform: lowercase;
   color: var(--color-ink);
-  border-bottom: 1px solid rgba(41, 57, 119, 0.1);
+  border-bottom: 1px solid rgba(255, 20, 147, 0.1);
   transform: translateX(0);
   transition: color var(--transition), transform var(--transition);
 }
@@ -1045,7 +1038,7 @@ main:focus { outline: none; }
   margin: 0 auto;
   padding: 3rem 2rem;
   text-align: center;
-  border: 1.5px dashed rgba(41, 57, 119, 0.28);
+  border: 1.5px dashed rgba(255, 20, 147, 0.28);
   border-radius: var(--radius-lg);
 }
 

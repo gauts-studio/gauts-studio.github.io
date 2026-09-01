@@ -70,7 +70,7 @@
   document.head.appendChild(favicon);
   const themeColor = document.createElement('meta');
   themeColor.name = 'theme-color';
-  themeColor.content = '#283977';
+  themeColor.content = '#FF1493';   /* rose vif (ex-#283977) */
   document.head.appendChild(themeColor);
 
   const navItem = (page) => `<li><a class="nav-link"
@@ -159,11 +159,10 @@
      ---------------------------------------------------------- */
   const NOTCH = {
     fillet: 22,     // rayon des raccords concaves, en haut
-    slant: 7,       // resserrement de chaque côté vers le bas
-    radius: 24,     // rayon des coins du bas
-    pad: 7,         // débord horizontal autour de l'onglet
-    depth: 0.83,    // profondeur, en fraction de la hauteur de la barre
-    duration: 620,  // glissement d'un onglet à l'autre (ms)
+    slant: 5,       // resserrement de chaque côté vers le bas
+    radius: 16,     // rayon des coins du bas
+    pad: 12,        // marge de confort uniforme autour de l'élément actif
+    duration: 380,  // glissement d'un onglet à l'autre (ms)
   };
 
   const card = document.getElementById('header-card');
@@ -199,27 +198,33 @@
   }
 
   // Le logo remplace l'onglet « Accueil » : il participe à l'encoche au
-  // même titre que les autres liens, sur la page d'accueil (état actif)
-  // et au survol/focus (aperçu temporaire — voir plus bas).
+  // même titre que les autres liens, sur la page d'accueil (état actif).
   const logoLink = card ? card.querySelector('.logo') : null;
-  let hoverTarget = null;
 
   const activeBarLink = () => {
-    if (hoverTarget) return hoverTarget;
     if (currentFile === 'index.html' && logoLink) return logoLink;
     return card ? card.querySelector('.nav-link.is-active') : null;
   };
 
+  // Dimensions RÉELLES de l'élément actif (lien texte court, lien long ou
+  // logo), mesurées à chaque appel — recalculées au resize / après le
+  // chargement des polices. `pad` = marge de confort uniforme :
+  //  - horizontalement, de part et d'autre ;
+  //  - verticalement, sous le bord bas de l'élément (l'encoche part
+  //    toujours du haut de la barre, sa profondeur suit l'élément).
   const boundsOf = (link) => {
     const a = link.getBoundingClientRect();
     const c = card.getBoundingClientRect();
-    return { x0: a.left - c.left - NOTCH.pad, x1: a.right - c.left + NOTCH.pad };
+    return {
+      x0: a.left - c.left - NOTCH.pad,
+      x1: a.right - c.left + NOTCH.pad,
+      h: Math.min(c.height, a.bottom - c.top + NOTCH.pad),
+    };
   };
 
-  function drawNotch(x0, x1) {
+  function drawNotch(x0, x1, h) {
     if (x1 - x0 < 24) { notchPathEl.setAttribute('d', ''); return; }
-    const h = Math.round(card.getBoundingClientRect().height * NOTCH.depth);
-    notchPathEl.setAttribute('d', notchPath(x0, x1, h));
+    notchPathEl.setAttribute('d', notchPath(x0, x1, Math.round(h)));
   }
 
   let notchAnim = null;
@@ -231,7 +236,11 @@
     const start = performance.now();
     const step = (now) => {
       const e = easeOut(Math.min(1, (now - start) / NOTCH.duration));
-      drawNotch(from.x0 + (to.x0 - from.x0) * e, from.x1 + (to.x1 - from.x1) * e);
+      drawNotch(
+        from.x0 + (to.x0 - from.x0) * e,
+        from.x1 + (to.x1 - from.x1) * e,
+        from.h + (to.h - from.h) * e,
+      );
       notchAnim = e < 1 ? requestAnimationFrame(step) : null;
     };
     notchAnim = requestAnimationFrame(step);
@@ -260,7 +269,7 @@
       animateNotch(notchAt, to);
     } else {
       if (notchAnim) { cancelAnimationFrame(notchAnim); notchAnim = null; }
-      drawNotch(to.x0, to.x1);
+      drawNotch(to.x0, to.x1, to.h);
     }
     notchAt = to;
   }
@@ -278,7 +287,7 @@
       card.classList.toggle('notch-on-logo', fromLink === logoLink);
       notchSvg.classList.add('is-ready');
       notchAt = boundsOf(fromLink);
-      drawNotch(notchAt.x0, notchAt.x1);
+      drawNotch(notchAt.x0, notchAt.x1, notchAt.h);
       setTimeout(() => moveNotch(), 90);
     } else {
       moveNotch({ animate: false });
@@ -289,19 +298,6 @@
     // peut changer après le premier tracé.
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(() => { if (!notchAnim) moveNotch({ animate: false }); });
-    }
-
-    // Aperçu au survol/focus du logo : l'encoche glisse temporairement
-    // sous le logo, puis revient à l'onglet réellement actif au départ
-    // (souris/clavier). Sans effet si on est déjà sur l'accueil, puisque
-    // l'encoche y est déjà.
-    if (logoLink) {
-      const previewLogo = () => { hoverTarget = logoLink; moveNotch(); };
-      const clearLogoPreview = () => { hoverTarget = null; moveNotch(); };
-      logoLink.addEventListener('mouseenter', previewLogo);
-      logoLink.addEventListener('mouseleave', clearLogoPreview);
-      logoLink.addEventListener('focus', previewLogo);
-      logoLink.addEventListener('blur', clearLogoPreview);
     }
   }
 

@@ -58,11 +58,23 @@ ne pas casser :
   facile à commettre en retouchant cette forme.
 
 Réglages dans l'objet `NOTCH` : `fillet` (rayon des raccords), `slant`
-(resserrement du trapèze), `radius` (coins du bas), `pad` (débord autour
-de l'onglet), `depth` (profondeur), `duration` (glissement).
+(resserrement du trapèze), `radius` (coins du bas), `pad` (marge de
+confort uniforme autour de l'élément actif), `duration` (glissement).
 
-Tous les onglets ont la **même largeur** (`.nav-link { min-width }`) :
-sans ça, la découpe change de gabarit à chaque clic et le rendu est sale.
+**Encoche dynamique.** La taille ET la profondeur de l'encoche sont
+mesurées en temps réel sur l'élément actif via `getBoundingClientRect()`
+(`boundsOf` dans `script.js`) : largeur + `pad` de chaque côté, profondeur
+= bord bas de l'élément + `pad` (l'encoche part toujours du haut de la
+barre). Elle épouse donc aussi bien un onglet texte que le **logo**
+(plus large, proportions différentes) sans laisser de navy visible sur
+les bords. Recalcul au `resize` et après `document.fonts.ready`. La
+transition d'un élément à l'autre reste un glissement animé (`animateNotch`,
+`NOTCH.duration` ≈ 380 ms, interpole x0/x1/h).
+
+Les onglets texte gardent un `min-width` commun (`.nav-link`) pour un
+rendu aligné dans la barre, mais l'encoche ne dépend plus de ça : elle
+mesure l'élément réel. Aucun aperçu au survol : seul l'état actif
+(page courante, ou logo sur l'accueil) déplace l'encoche.
 Le remplissage de l'encoche doit rester **identique au fond de page**
 (`--color-white`), c'est lui qu'on voit à travers la découpe — d'où le
 `background` sur `.site-header`.
