@@ -70,7 +70,7 @@
   document.head.appendChild(favicon);
   const themeColor = document.createElement('meta');
   themeColor.name = 'theme-color';
-  themeColor.content = '#FF1493';   /* rose vif (ex-#283977) */
+  themeColor.content = '#283977';
   document.head.appendChild(themeColor);
 
   const navItem = (page) => `<li><a class="nav-link"

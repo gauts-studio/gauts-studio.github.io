@@ -6,15 +6,15 @@
    ============================================ */
 
 :root {
-  /* Couleurs — le bleu marine d'origine a été remplacé par du rose vif */
-  --color-ink: #FF1493;         /* rose vif (ex-#293977) — fonds sombres (header, hero, à propos, footer) + accents forts */
+  /* Couleurs */
+  --color-ink: #293977;         /* bleu foncé — fonds sombres (header, hero, à propos, footer) + accents forts */
   --color-paper: #FCDED0;       /* beige — fonds de section, cartes (identique au fond principal) */
   --color-white: #FCDED0;       /* beige — fond principal de page */
-  --color-signal: #FF1493;      /* rose vif (ex-#293977) — CTA, boutons sur fond clair */
-  --color-signal-dim: #FF66B3;  /* rose clair (ex-#5B77B9) — survol des boutons */
-  --color-signal-light: #FFB3D9; /* rose pâle (ex-#ACABC5) — teinte claire, lisible sur fond sombre */
-  --color-steel: #E63995;       /* rose soutenu (ex-#44569E) — texte secondaire */
-  --color-charcoal: #FF1493;    /* rose vif (ex-#293977) — texte principal */
+  --color-signal: #293977;      /* bleu foncé — CTA, boutons sur fond clair */
+  --color-signal-dim: #5B77B9;  /* bleu clair — survol des boutons */
+  --color-signal-light: #ACABC5; /* teinte claire dérivée, pour rester lisible sur fond bleu foncé */
+  --color-steel: #44569E;       /* texte secondaire, mélange des deux bleus pour la hiérarchie */
+  --color-charcoal: #293977;    /* texte principal */
 
   /* Typo — Nunito Sans partout (chargée via Google Fonts dans le <head>) */
   --font-display: "Nunito Sans", "Helvetica Neue", Arial, sans-serif;
@@ -377,7 +377,7 @@ img { max-width: 100%; display: block; }
   border-radius: 50%;
   transition: background var(--transition);
 }
-.dropdown-close:hover { background: rgba(255, 20, 147, 0.08); }
+.dropdown-close:hover { background: rgba(41, 57, 119, 0.08); }
 .dropdown-close svg { width: 20px; height: 20px; }
 
 .dropdown-nav {
@@ -393,7 +393,7 @@ img { max-width: 100%; display: block; }
   letter-spacing: 0.02em;
   text-transform: lowercase;
   color: var(--color-ink);
-  border-bottom: 1px solid rgba(255, 20, 147, 0.1);
+  border-bottom: 1px solid rgba(41, 57, 119, 0.1);
   transform: translateX(0);
   transition: color var(--transition), transform var(--transition);
 }
@@ -1038,7 +1038,7 @@ main:focus { outline: none; }
   margin: 0 auto;
   padding: 3rem 2rem;
   text-align: center;
-  border: 1.5px dashed rgba(255, 20, 147, 0.28);
+  border: 1.5px dashed rgba(41, 57, 119, 0.28);
   border-radius: var(--radius-lg);
 }
 
