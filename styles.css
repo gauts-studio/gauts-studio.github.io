@@ -517,8 +517,36 @@ main:focus { outline: none; }
   align-items: center;
 }
 
+/* Slide « Cartes de visite » — en pile (mobile / tablette < 900 px) :
+   le mockup passe sous le texte, centré, borné pour ne pas devenir
+   démesuré sur les grands téléphones et petites tablettes. */
+.hero-inner-cartes .real-mockup {
+  max-width: 460px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 @media (min-width: 900px) {
   .hero-inner { grid-template-columns: 1.15fr 0.85fr; gap: 3rem; }
+  /* Slide « Cartes de visite » : le mockup est un vrai visuel (pas un
+     placeholder), on lui donne le poids de colonne dominant pour qu'il
+     occupe l'espace de droite. Entre 900 et 1300 px, on borne sa largeur
+     et on garde une marge à droite : sinon il passerait sous la flèche
+     « suivant » du carrousel. Au-delà (voir plus bas), on lève la borne. */
+  .hero-inner-cartes { grid-template-columns: 0.95fr 1.05fr; gap: 2rem; }
+  .hero-inner-cartes .real-mockup {
+    margin-left: auto;
+    margin-right: 3.5rem;
+    max-width: 500px;
+  }
+}
+
+/* À partir de ~1300 px, le hero est assez large pour que la flèche
+   « suivant » dégage le bord du conteneur : on peut lever la borne et
+   laisser le mockup prendre toute la colonne (dominante). */
+@media (min-width: 1300px) {
+  .hero-inner-cartes { grid-template-columns: 0.85fr 1.15fr; gap: 2.25rem; }
+  .hero-inner-cartes .real-mockup { margin-right: 0; max-width: 620px; }
 }
 
 .hero-content { max-width: 56ch; }
