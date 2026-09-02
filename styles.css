@@ -261,12 +261,17 @@ img { max-width: 100%; display: block; }
   gap: 0.5rem;
 }
 
-/* Les onglets texte gardent une largeur mini commune (rendu aligné dans
-   la barre) ; l'encoche, elle, est mesurée en JS sur l'élément réel, donc
-   elle s'ajuste au logo comme aux liens. Le texte est centré. */
+/* Tous les onglets texte ont EXACTEMENT la même boîte : largeur fixe
+   (assez large pour « rebranding » en graisse Black), hauteur et padding
+   identiques. L'encoche étant mesurée en JS sur l'élément réel, cette
+   égalité stricte garantit que le glissement est rigoureusement le même
+   d'un onglet à l'autre — même translation, largeur constante, aucune
+   déformation propre à un onglet. Ne pas repasser en `min-width` : un
+   libellé plus long élargirait alors sa seule encoche. Le texte est
+   centré dans la boîte. */
 .nav-link {
   display: inline-block;
-  min-width: 6.1rem;
+  width: 7.5rem;
   padding: 0.55rem 0.8rem;
   text-align: center;
   color: var(--color-paper);
@@ -1011,11 +1016,16 @@ main:focus { outline: none; }
 .page-hero-visual { display: flex; }
 
 /* Vrai visuel (pas un placeholder) : affiché sans cadre ni fond,
-   directement sur le bleu du hero. */
-.page-hero-visual .real-mockup {
+   directement sur le bleu du hero. Même traitement aux deux endroits où
+   ce mockup apparaît : le hero de la page cartes de visite
+   (`.page-hero-visual`) et le slide « Cartes de visite » du carrousel
+   d'accueil (`.hero-visual`). `height: auto` garde le ratio de l'image
+   (aucune déformation) ; `width: 100%` la laisse suivre sa colonne, qui
+   passe pleine largeur sous 900 px. */
+.real-mockup {
   width: 100%;
 }
-.page-hero-visual .real-mockup img {
+.real-mockup img {
   width: 100%;
   height: auto;
   display: block;

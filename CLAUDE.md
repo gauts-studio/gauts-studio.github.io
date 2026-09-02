@@ -71,10 +71,18 @@ les bords. Recalcul au `resize` et après `document.fonts.ready`. La
 transition d'un élément à l'autre reste un glissement animé (`animateNotch`,
 `NOTCH.duration` ≈ 380 ms, interpole x0/x1/h).
 
-Les onglets texte gardent un `min-width` commun (`.nav-link`) pour un
-rendu aligné dans la barre, mais l'encoche ne dépend plus de ça : elle
-mesure l'élément réel. Aucun aperçu au survol : seul l'état actif
-(page courante, ou logo sur l'accueil) déplace l'encoche.
+Les onglets texte ont tous une **largeur fixe identique** (`.nav-link`
+→ `width: 7.5rem`, assez large pour « rebranding » en graisse Black).
+C'est volontaire : comme l'encoche est mesurée sur l'élément réel, cette
+égalité stricte garantit que le glissement d'un onglet à l'autre est
+**rigoureusement le même partout** (même translation, largeur d'encoche
+constante à 188 px, aucune déformation propre à un onglet). Ne pas
+repasser en `min-width` : un libellé plus long élargirait alors sa seule
+encoche, ce qui se voyait sur « rebranding ». Le logo, lui, reste plus
+étroit — l'encoche rétrécit donc en arrivant sur l'accueil : c'est le
+seul cas où sa largeur change, et c'est voulu. Aucun aperçu au survol :
+seul l'état actif (page courante, ou logo sur l'accueil) déplace
+l'encoche.
 Le remplissage de l'encoche doit rester **identique au fond de page**
 (`--color-white`), c'est lui qu'on voit à travers la découpe — d'où le
 `background` sur `.site-header`.
