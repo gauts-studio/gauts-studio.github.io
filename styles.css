@@ -50,7 +50,7 @@ body {
   margin: 0;
   font-family: var(--font-body);
   color: var(--color-charcoal);
-  background: #00ff00; /* TEST TEMPORAIRE — remettre var(--color-white) */
+  background: var(--color-white);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
